@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--按线程分文件，按线程ID：ThreadID 按线程名：ThreadName-->
+<!--monitorInterval 热改生效时长配置 值以分钟为单位-->
+<Configuration monitorInterval="1">
+    <!-- 属性定义 -->
+    <Properties>
+        <!--日志根目录 -->
+        <!-- tomcat -->
+        <Property name="log-path">../log/log-dcimService</Property>
+        <!-- JBoss -->
+        <!--<Property name="log-path">${jboss.server.home.dir}/log/logs-data</Property>-->
+        <!-- 日志切割的最小单位 -->
+        <property name="every_file_size">30M</property>
+        <!-- 日志打印格式-->
+        <property name="log_pattern">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c - %msg%n</property>
+        <!-- 日志输出级别 -->
+        <property name="output_log_level">info</property>
+        <!-- 日志每天最多个数 -->
+        <property name="max_size">10</property>
+        <!-- 日志保留最多天数 -->
+        <property name="max_days">7</property>
+        <!-- FATAL日志输出-->
+        <property name="fatal_file">fatal</property>
+        <!-- ERROR-FATAL日志输出-->
+        <property name="error_file">error</property>
+        <!-- WARN-FATAL日志输出-->
+        <property name="warn_file">warn</property>
+        <!-- INFO-FATAL日志输出-->
+        <property name="info_file">info</property>
+        <!-- ALL日志输出-->
+        <property name="all_file">all</property>
+    </Properties>
+
+    <Appenders>
+        <!-- 控制台输出 -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Filters>
+                <!-- 最高级别 -->
+               <!-- <ThresholdFilter level="fatal" onMatch="ACCEPT" onMismatch="NEUTRAL"/>-->
+                <!-- 最小级别-发布阶段 发布阶段hibernate.show_sql=false -->
+                <!--<ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>-->
+                <!-- 最小级别-测试阶段 -->
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </Console>
+
+        <!-- FATAL日志输出 -->
+        <RollingFile name="fatal" fileName="${log-path}/${fatal_file}.log"
+                     filePattern="${log-path}/${fatal_file}.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${max_size}">
+                <!-- 删除指定目录下n天之前的日志-->
+                <Delete basePath="${log-path}" maxDepth="1">
+                    <IfFileName glob="${fatal_file}.*.log"/>
+                    <IfLastModified age="${max_days}d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <Filters>
+                <ThresholdFilter level="fatal" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <!-- ERROR,Exception日志输出 -->
+        <RollingFile name="error" fileName="${log-path}/${error_file}.log"
+                     filePattern="${log-path}/${error_file}.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${max_size}">
+                <!-- 删除指定目录下n天之前的日志-->
+                <Delete basePath="${log-path}" maxDepth="1">
+                    <IfFileName glob="${error_file}.*.log"/>
+                    <IfLastModified age="${max_days}d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <Filters>
+                <RegexFilter regex=".*Exception.*" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <!-- WARN日志输出 -->
+        <RollingFile name="warn" fileName="${log-path}/${warn_file}.log"
+                     filePattern="${log-path}/${warn_file}.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${max_size}">
+                <!-- 删除指定目录下n天之前的日志-->
+                <Delete basePath="${log-path}" maxDepth="1">
+                    <IfFileName glob="${warn_file}.*.log"/>
+                    <IfLastModified age="${max_days}d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <!-- INFO日志输出 -->
+        <RollingFile name="info" fileName="${log-path}/${info_file}.log"
+                     filePattern="${log-path}/${info_file}.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${max_size}">
+                <!-- 删除指定目录下n天之前的日志-->
+                <Delete basePath="${log-path}" maxDepth="1">
+                    <IfFileName glob="${info_file}.*.log"/>
+                    <IfLastModified age="${max_days}d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <!-- 所有级别日志输出 -->
+        <RollingFile name="all" fileName="${log-path}/${all_file}.log"
+                     filePattern="${log-path}/${all_file}.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${max_size}">
+                <!-- 删除指定目录下n天之前的日志-->
+                <Delete basePath="${log-path}" maxDepth="1">
+                    <IfFileName glob="${all_file}.*.log"/>
+                    <IfLastModified age="${max_days}d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <!-- 默认 -->
+    <Loggers>
+        <!--<Logger name="org.apache.ibatis.common.jdbc.ScriptRunner" level="debug" additivity="false"></Logger>-->
+        <!--<Logger name="org.apache.ibatis.common.jdbc.SimpleDataSource" level="debug" additivity="false"></Logger>-->
+        <!--<Logger name="org.apache.ibatis.common.jdbc.SimpleDataSource" level="debug" additivity="false"></Logger>-->
+        <!--<Logger name="org.apache.ibatis.common.jdbc.SqlMapClientDelegate" level="debug" additivity="false"></Logger>-->
+        <!--<Logger name="java.sql.Connection" level="debug" additivity="false"></Logger>-->
+        <!--<Logger name="java.sql.Statement" level="debug" additivity="false"></Logger>-->
+        <!--<Logger name="java.sql.PreparedStatement" level="debug" additivity="false"></Logger>-->
+        <!--<Logger name="java.sql.ResultSet" level="debug" additivity="false"></Logger>-->
+        <Root level="${output_log_level}">
+            <AppenderRef ref="fatal"/>
+            <AppenderRef ref="error"/>
+            <AppenderRef ref="warn"/>
+            <AppenderRef ref="info"/>
+            <AppenderRef ref="all"/>
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

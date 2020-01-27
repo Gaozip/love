@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lizhishu.love.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="org.lizhishu.love.entity.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="REAL_NAME" jdbcType="VARCHAR" property="realName" />
+    <result column="BIRTHDAY" jdbcType="DATE" property="birthday" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="CREATE_TIME" jdbcType="DATE" property="createTime" />
+    <result column="CREATE_USER_ID" jdbcType="INTEGER" property="createUserId" />
+    <result column="LOGIN_IP" jdbcType="VARCHAR" property="loginIp" />
+    <result column="LAST_LOGIN_TIME" jdbcType="DATE" property="lastLoginTime" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="USER_TYPE" jdbcType="INTEGER" property="userType" />
+    <result column="IS_ADMIN" jdbcType="INTEGER" property="isAdmin" />
+    <result column="IS_LOCKED_BY_ERROR_LOGIN" jdbcType="INTEGER" property="isLockedByErrorLogin" />
+    <result column="CYCLE_COUNT_BY_ERROR" jdbcType="INTEGER" property="cycleCountByError" />
+    <result column="LAST_CHANGE_PASSWORD_TIME" jdbcType="DATE" property="lastChangePasswordTime" />
+  </resultMap>
+</mapper>
