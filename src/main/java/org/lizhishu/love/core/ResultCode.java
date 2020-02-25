@@ -32,7 +32,19 @@ public enum ResultCode {
     /**
      * session 过期
      */
-    SESSION_TIME_OUT(601);
+    SESSION_TIME_OUT(601),
+    /**
+     * Token不存在
+     */
+    JWT_ERRCODE_NULL(4000),
+    /**
+     * Token过期
+     */
+    JWT_ERRCODE_EXPIRE(4001),
+    /**
+     * 验证不通过
+     */
+    JWT_ERRCODE_FAIL(4002);
 
 
     private final int code;

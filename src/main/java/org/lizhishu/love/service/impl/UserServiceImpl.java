@@ -20,4 +20,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     @Resource
     private UserMapper sysUserMapper;
 
+    @Override
+    public User findByUserName(String userName) {
+        System.out.println(userName);
+        return sysUserMapper.findByUserName(userName);
+    }
 }

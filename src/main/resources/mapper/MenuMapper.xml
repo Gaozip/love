@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lizhishu.love.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="org.lizhishu.love.entity.Menu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="MENU_ID" jdbcType="INTEGER" property="menuId" />
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="MENU_CODE" jdbcType="VARCHAR" property="menuCode" />
+    <result column="ICON_NAME" jdbcType="VARCHAR" property="iconName" />
+    <result column="MENU_ROUTER" jdbcType="VARCHAR" property="menuRouter" />
+    <result column="MENU_DESC" jdbcType="VARCHAR" property="menuDesc" />
+    <result column="CREATE_BY_TIME" jdbcType="DATE" property="createByTime" />
+    <result column="CREATE_BY_ID" jdbcType="INTEGER" property="createById" />
+    <result column="IS_VALID" jdbcType="INTEGER" property="isValid" />
+  </resultMap>
+</mapper>

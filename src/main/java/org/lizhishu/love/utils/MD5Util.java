@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.springframework.stereotype.Component;
 @Component
-public class MD5Utils {
+public class MD5Util {
 	/**
 	 */
 	public static String md5(String plainText) {

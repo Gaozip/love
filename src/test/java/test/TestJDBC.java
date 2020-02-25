@@ -6,7 +6,7 @@ import org.lizhishu.love.LoveApplication;
 import org.lizhishu.love.core.Builder;
 import org.lizhishu.love.entity.User;
 import org.lizhishu.love.service.UserService;
-import org.lizhishu.love.utils.MD5Utils;
+import org.lizhishu.love.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -30,7 +30,7 @@ public class TestJDBC {
     public void testSave(){
         User user = Builder.of(User::new)
                 .with(User::setUserName, "zhangsan")
-                .with(User::setPassword, MD5Utils.md5("11111"))
+                .with(User::setPassword, MD5Util.md5("11111"))
                 .with(User::setRealName, "张三")
                 .with(User::setBirthday, new Date(1997, 2, 19))
                 .with(User::setEmail, "2982824385@qq.com")

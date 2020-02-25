@@ -60,4 +60,10 @@ public class ResultGenerator {
                 .setCode(ResultCode.SESSION_TIME_OUT)
                 .setMessage("session 已过期");
     }
+
+    public static Result genResult(ResultCode resultCode,String message){
+        return new Result()
+                .setCode(resultCode)
+                .setMessage(message);
+    }
 }

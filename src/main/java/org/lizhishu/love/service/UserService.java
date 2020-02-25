@@ -10,4 +10,5 @@ import org.lizhishu.love.entity.User;
 */
 public interface UserService extends Service<User> {
 
+    User findByUserName(String userName);
 }

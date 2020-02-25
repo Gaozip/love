@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.lizhishu.love.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="org.lizhishu.love.entity.User">
+  <resultMap id="UserMap" type="org.lizhishu.love.entity.User">
     <!--
       WARNING - @mbg.generated
     -->
@@ -23,4 +23,9 @@
     <result column="CYCLE_COUNT_BY_ERROR" jdbcType="INTEGER" property="cycleCountByError" />
     <result column="LAST_CHANGE_PASSWORD_TIME" jdbcType="DATE" property="lastChangePasswordTime" />
   </resultMap>
+
+  <select id="findByUserName" parameterType="String" resultMap="UserMap">
+    select * from sys_user where user_name = #{username,jdbcType=VARCHAR} limit 1
+  </select>
+
 </mapper>

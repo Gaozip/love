@@ -59,6 +59,7 @@
 //
 ////        genCodeByCustomModelName("输入表名","输入自定义Model名称");
 ////        genCodeByCustomModelName("sys_user","User");
+//        genCodeByCustomModelName("sys_menu","Menu");
 //    }
 //
 //    /**
