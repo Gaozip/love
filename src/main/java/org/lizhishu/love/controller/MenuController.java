@@ -4,11 +4,17 @@ import org.lizhishu.love.core.Result;
 import org.lizhishu.love.core.ResultGenerator;
 import org.lizhishu.love.entity.Menu;
 import org.lizhishu.love.service.MenuService;
+import org.lizhishu.love.utils.WebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @Author: gaozp
@@ -18,6 +24,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
+
+    private static Logger logger = LoggerFactory.getLogger(MenuController.class);
+
     @Resource
     private MenuService menuService;
 
@@ -30,9 +39,30 @@ public class MenuController {
         menu.setCreateById(1);
         menu.setCreateByTime(new Date());
         menu.setIsValid(1);
-        System.out.println(menu.toString());
-//        menuService.save(menu);
+        menuService.save(menu);
         return ResultGenerator.genSuccessResult();
+    }
+
+    /**
+     * 校验菜单是否被注册过
+     * @param menu
+     * @return
+     */
+    @PostMapping("/checkMenuExist")
+    public Result checkMenuExist(@RequestBody Menu menu){
+
+        if(WebUtil.equalsNull(menu.getMenuCode()) || WebUtil.equalsNull(menu.getMenuRouter())){
+            return ResultGenerator.genFailResult("菜单编号或菜单路由不存在!");
+        }
+        try {
+            Integer num = this.menuService.checkMenuExist(menu);
+            Map<String,Integer> map = new HashMap<>();
+            map.put("checkExist",num);
+            return ResultGenerator.genSuccessResult(map);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return ResultGenerator.genFailResult("业务逻辑失败!请联系管理员!");
+        }
     }
 
     /**
@@ -69,11 +99,24 @@ public class MenuController {
     *  列表
     * @return
     */
-//    @GetMapping
-//    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-//        PageHelper.startPage(page, size);
-//        List<Menu> list = menuService.findAll();
-//        PageInfo pageInfo = new PageInfo(list);
-//        return ResultGenerator.genSuccessResult(pageInfo);
-//    }
+    @GetMapping
+    public Result list() {
+        List<Menu> list = menuService.findAll();
+        return ResultGenerator.genSuccessResult(list);
+    }
+
+    /**
+     * 根据菜单标识删除
+     * @param menuCode
+     */
+    @DeleteMapping("/{menuCode}")
+    public Result deleteByMenuCode(@PathVariable String menuCode){
+        try {
+            this.menuService.deleteByMenuCode(menuCode);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return ResultGenerator.genFailResult("业务处理失败!请联系管理员!");
+        }
+        return ResultGenerator.genSuccessResult();
+    }
 }

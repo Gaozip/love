@@ -76,6 +76,7 @@ public class LoginController {
                 this.updateUserLoginInfo(request, user);
                 logger.info("用户名:[" + user.getUserName() + "],密码:[" + user.getPassword() + "]登录成功");
                 String JWT = JwtUtils.createJWT("1", user.getUserName(), SystemConstant.JWT_TTL);
+                logger.info(JWT);
                 return ResultGenerator.genSuccessResult(JWT);
             } catch (Exception e) {
                 logger.error("用户登录出现异常，请联系管理员", e);
